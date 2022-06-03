@@ -1,0 +1,25 @@
+﻿<p>Descubre los mejores lugares para pasar bien junto a tus seres queridos.</p>
+
+<div id="search">
+    <div class="group btmspace-50">
+        <div class="one_half first">
+            <EditForm Model="BusquedaModel" OnValidSubmit="Buscar">
+                <DataAnnotationsValidator />
+                <div>
+                    <InputText id="name" class="btmspace-15" @bind-Value="BusquedaModel.TextoBusqueda" />
+                    <button class="btn" type="submit">Buscar</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    BusquedaDTO BusquedaModel = new BusquedaDTO();
+
+    private void Buscar()
+    {
+        var dato = BusquedaModel;
+    }
+
+}

@@ -1,7 +1,65 @@
 ﻿@page "/"
+@using tn_prueba_web.Client.Repositorios
 
-<h1>Hello, world!</h1>
+<div class="wrapper">
+    <div id="pageintro" class="hoc clear">
+        <article>
+            <h2 class="heading">Morbi eleifend semper</h2>
+            <p>Urna eget tincidunt nam tincidunt viverra semper suspendisse in bibendum diam quisque.</p>
+            <footer><a class="btn" href="#">Volutpat tellus</a></footer>
+        </article>
+    </div>
 
-Welcome to your new app.
+</div>
+<div class="wrapper row3">
+    <div class="hoc container clear">
+        <div class="sectiontitle">
+            <h6 class="heading">LUGARES TURISTICOS</h6>
+            <hr />
+        </div>
+        <Paquetes Model="lst_paquetesTour" />
+        <div class="sectiontitle">
+            <h6 class="heading">COMERCIOS</h6>
+            <hr />
+        </div>
+        <Paquetes Model="lst_paquetesComercio" />
+    </div>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    <article>
+        <h6 class="heading font-x1"><a href="#">Gravida venenatis</a></h6>
+        <p class="nospace">Nec porttitor orci faucibus elit donec est dui vulputate id diam vitae&hellip;</p>
+    </article>
+</div>
+
+@code{
+    [Inject] IRepositorio repositorio { get; set; }
+    public List<PaqPaquete> lst_paquetesTour { get; set; } = new List<PaqPaquete>();
+    public List<PaqPaquete> lst_paquetesComercio { get; set; } = new List<PaqPaquete>();
+
+
+    protected async override Task OnInitializedAsync()
+    {
+        await Carga();
+    }
+
+    private async Task Carga()
+    {
+        var rutaTour = $"api/paquete/1";
+        var rutaComercio = $"api/paquete/2";
+
+        var httpResponsePaquetesTour = await repositorio.Get<List<PaqPaquete>>(rutaTour);
+        if (!httpResponsePaquetesTour.Error)
+        {
+            lst_paquetesTour = httpResponsePaquetesTour.Response;
+            lst_paquetesTour.OrderBy(a => Guid.NewGuid()).ToList();
+        }
+
+        var httpResponsePaquetesComercio = await repositorio.Get<List<PaqPaquete>>(rutaComercio);
+        if (!httpResponsePaquetesComercio.Error)
+        {
+            lst_paquetesComercio = httpResponsePaquetesComercio.Response;
+            lst_paquetesComercio.OrderBy(a => Guid.NewGuid()).ToList();
+
+        }
+    }
+}

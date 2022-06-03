@@ -1,0 +1,59 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "tn_pruebaContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models",
+   "ProjectRootNamespace": "tn_prueba_web.Shared",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 2,
+   "Tables": [
+      {
+         "Name": "[dbo].[cli_cliente]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[estr_estado_res]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[paq_paquete]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[res_reserva]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[ser_servicio]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tpaq_tipo_paquete]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "DIN-ACALLES\\SQLEXPRESS.tn_prueba",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": false,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}

@@ -1,0 +1,186 @@
+﻿@page "/reserva/{codser:int}"
+@using tn_prueba_web.Client.Repositorios
+@inject NavigationManager NavManager
+
+
+<div class="wrapper row3">
+    <main class="hoc container clear">
+        <div class="content three_quarter">
+            <div>
+                <div class="wrapper bgded overlay" style="background-image:url('images/gallery/@servicio.SerImagen');">
+                    <article class="hoc container clear center">
+                        <div class="sectiontitle" style="margin-bottom:30px;">
+                            <h6 class="heading">@servicio.SerNombre</h6>
+                            <p>@servicio.SerDescripcion</p>
+                        </div>
+                        <p>
+                            <input class="btn" type="button" @onclick="Restar" value="-">
+                            @Cant
+                            <input class="btn" type="button" @onclick="Sumar" value="+">
+                        </p>
+                        <div><h3>TOTAL A CANCELAR: <b style="color:palegreen">$@Total</b></h3></div>
+                    </article>
+                </div>
+            </div>
+            <hr />
+            <div id="comments">
+                <h4>REALIZAR RESERVA</h4>
+                @if (!comfirm)
+                {
+                    <div>
+                        <EditForm Model="@cliente" OnValidSubmit="VerificarCliente">
+                            <label>Documento identidad: </label>
+                            <div class="one_quarter first">
+                                <InputText @bind-Value="cliente.CliDocumento" />
+                            </div>
+                            <div class="three_quarter">
+                                <input type="submit" name="submit" value="Continuar">
+                            </div>
+                        </EditForm>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <EditForm Model="@cliente" OnValidSubmit="CrearReserva">
+                            <DataAnnotationsValidator />
+                            <ValidationSummary />
+
+                            <div class="one_third first">
+                                <label>Documento: <span>*</span></label>
+                                <InputText @bind-Value="cliente.CliDocumento" disabled="true" />
+                            </div>
+                            <div class="two_third">
+                                <label>Nombre: <span>*</span></label>
+                                <InputText @bind-Value="cliente.CliNombre" />
+                            </div>
+                            <div class="one_third first">
+                                <label>Correo: <span>*</span></label>
+                                <InputText @bind-Value="cliente.CliCorreo" />
+                            </div>
+                            <div class="one_third">
+                                <label>Telefono: <span>*</span></label>
+                                <InputText @bind-Value="cliente.CliTelefono" />
+                            </div>
+
+                            <div class="one_third first">
+                                <input type="submit" name="submit" value="Completar">
+                            </div>
+                            <div class="one_third">
+                                <input type="reset" name="reset" @onclick="Reset" value="Reset Form">
+                            </div>
+                        </EditForm>
+                    </div>
+                }
+            </div>
+        </div>
+    </main>
+</div>
+
+@code {
+    [Parameter] public int codser { get; set; }
+    private CliCliente cliente = new();
+    public bool comfirm { get; set; } = false;
+    public SerServicio servicio { get; set; } = new SerServicio();
+    [Inject] IRepositorio repositorio { get; set; }
+    public Double? Total { get; set; } = 0;
+    public Double Cant = 1;
+    public ResReserva reserva { get; set; } = new ResReserva();
+
+    protected async override Task OnInitializedAsync()
+    {
+        var rutaServicios = $"api/servicio";
+
+        var httpResponseServices = await repositorio.Get<List<SerServicio>>(rutaServicios);
+        if (!httpResponseServices.Error)
+        {
+            var serv = httpResponseServices.Response;
+            servicio = serv.Where(x => x.SerCodigo == codser).FirstOrDefault();
+        }
+
+        Precio();
+
+    }
+
+    async Task VerificarCliente()
+    {
+        if (cliente.CliDocumento != "" && cliente.CliDocumento != null)
+        {
+            var rutaCliente = $"api/cliente/{cliente.CliDocumento}";
+
+            var httpResponseCliente = await repositorio.Get<CliCliente>(rutaCliente);
+            if (!httpResponseCliente.Error)
+            {
+                var respCli = httpResponseCliente.Response;
+                if (respCli.CliCodigo > 0)
+                {
+                    cliente = respCli;
+                }
+                comfirm = true;
+            }
+        }
+    }
+
+    void Reset()
+    {
+        comfirm = false;
+        cliente = new CliCliente();
+    }
+
+    void Sumar()
+    {
+        Cant = Cant + 1;
+        Precio();
+    }
+
+    void Restar()
+    {
+        if (Cant - 1 > 0)
+        {
+            Cant = Cant - 1;
+        }
+        Precio();
+    }
+
+    void Precio()
+    {
+        Total = servicio.SerPrecio * Cant;
+    }
+
+    async Task CrearReserva()
+    {
+        if (cliente.CliCodigo <= 0)
+        {
+            var rutaCliente = $"api/cliente";
+            await repositorio.Post<CliCliente>(rutaCliente, cliente);
+        }
+
+
+
+        reserva.ResCodcli = await GetId();
+        reserva.ResCodestr = 2;
+        reserva.ResCodser = servicio.SerCodigo;
+        reserva.ResFecha = DateTime.Now.Date;
+
+        for (int i = 0; i < Cant; i++)
+        {
+            var rutaCliente = $"api/reserva";
+            await repositorio.Post<ResReserva>(rutaCliente, reserva);
+        }
+
+        NavManager.NavigateTo("/success");
+    }
+
+    async Task<int> GetId()
+    {
+        var rutaCliente = $"api/cliente/{cliente.CliDocumento}";
+
+        var httpResponseCliente = await repositorio.Get<CliCliente>(rutaCliente);
+        if (!httpResponseCliente.Error)
+        {
+            return httpResponseCliente.Response.CliCodigo;
+        }
+
+        return 0;
+    }
+}

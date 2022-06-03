@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using tn_prueba_web.Client.Repositorios;
 
 namespace tn_prueba_web.Client
 {
@@ -18,8 +19,13 @@ namespace tn_prueba_web.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
+            ConfigureServices(builder.Services);
             await builder.Build().RunAsync();
+        }
+
+        private static void ConfigureServices(IServiceCollection services)
+        {        
+           services.AddScoped<IRepositorio, Repositorio>();
         }
     }
 }

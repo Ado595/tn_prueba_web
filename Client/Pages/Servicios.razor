@@ -1,0 +1,36 @@
+﻿@page "/services/{codPaquete:int}"
+@using tn_prueba_web.Client.Repositorios
+
+<div class="wrapper">
+    <section id="breadcrumb" class="hoc clear">
+        <h6 class="heading">Servicios</h6>
+    </section>
+</div>
+<div class="wrapper row3">
+    <main class="hoc container clear">
+        <div class="content three_quarter first">
+            <div id="comments">
+                <ServiciosLst Model="lst_servicios"></ServiciosLst>
+                <Comments></Comments>
+            </div>
+        </div>
+        <Sidebar></Sidebar>
+    </main>
+</div>
+@code {
+    [Parameter] public int? codPaquete { get; set; }
+    [Inject] IRepositorio repositorio { get; set; }
+    public List<SerServicio> lst_servicios { get; set; } = new List<SerServicio>();
+
+    protected async override Task OnInitializedAsync()
+    {
+        var rutaServicios = $"api/servicio/{codPaquete}";
+
+        var httpResponseServices = await repositorio.Get<List<SerServicio>>(rutaServicios);
+        if (!httpResponseServices.Error)
+        {
+            lst_servicios = httpResponseServices.Response;
+        }
+
+    }
+}

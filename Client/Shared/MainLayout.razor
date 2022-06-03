@@ -1,17 +1,20 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JsRuntime
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
+<div class="bgded overlay" style=" background-image: url('images/gallery/01.jpg');">
+    <div class="wrapper row1">
+        <header id="header" class="hoc clear">
+            <div id="logo" class="fl_left">
+                <h1><a href="index.html">TECHTOUR</a></h1>
+            </div>
+                <NavMenu></NavMenu>
+        </header>
     </div>
-
-    <div class="main">
-        <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-        </div>
-
-        <div class="content px-4">
-            @Body
-        </div>
-    </div>
+    @Body
 </div>
+<Footer></Footer>
+@code{
+   
+}
+
+

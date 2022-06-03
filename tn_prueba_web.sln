@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tn_prueba_web.Server", "Server\tn_prueba_web.Server.csproj", "{8BA73E27-AE4C-4706-9247-396CBF3D42A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tn_prueba_web.Server", "Server\tn_prueba_web.Server.csproj", "{8BA73E27-AE4C-4706-9247-396CBF3D42A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tn_prueba_web.Client", "Client\tn_prueba_web.Client.csproj", "{5AA67571-7C70-46D8-B05B-22505E46A695}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tn_prueba_web.Client", "Client\tn_prueba_web.Client.csproj", "{5AA67571-7C70-46D8-B05B-22505E46A695}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tn_prueba_web.Shared", "Shared\tn_prueba_web.Shared.csproj", "{76EF72FB-DD30-4BE5-80CE-C1DBD503EA3E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tn_prueba_web.Shared", "Shared\tn_prueba_web.Shared.csproj", "{76EF72FB-DD30-4BE5-80CE-C1DBD503EA3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

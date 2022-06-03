@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>tn_prueba_web</title>
+    <title>TecTour</title>
     <base href="/" />
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/app.css" rel="stylesheet" />
-    <link href="tn_prueba_web.Client.styles.css" rel="stylesheet" />
+    <link href="layout/styles/layout.css" rel="stylesheet" media="all" />
 </head>
 
-<body>
+<body id="top">
     <div id="app">Loading...</div>
 
-    <div id="blazor-error-ui">
+    <!--<div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
-    </div>
-    <script src="_framework/blazor.webassembly.js"></script>
-</body>
+    </div>-->
+    <script src="_framework/blazor.webassembly.js" autostart="false"></script>
 
+    <script src="layout/scripts/jquery.min.js"></script>
+    <script>
+        Blazor.start().then(function () {
+            var mobilemenu = document.createElement('script');
+            mobilemenu.setAttribute('src', 'layout/scripts/jquery.mobilemenu.js');
+            document.head.appendChild(mobilemenu);
+        });
+    </script>
+</body>
 </html>

@@ -1,0 +1,25 @@
+﻿<ul>
+    @foreach (var item in Model)
+    {
+        <li>
+            <article>
+                <img src="images/gallery/@item.SerImagen" width="500" />
+                <header>
+                    <address>
+                        <label>@item.SerNombre</label>
+                    </address>
+                </header>
+                <h4 style="color:forestgreen; font-weight:bold">Precio: $@item.SerPrecio</h4>
+                <div class="comcont">
+                    <p>@item.SerDescripcion</p>
+                </div>
+                    <footer class="nospace"><a class="btn" href="Reserva/@item.SerCodigo">Reservar &raquo;</a></footer>
+            </article>
+        </li>
+    }
+</ul>
+<a href="#">content</a>
+
+@code {
+    [Parameter] public List<SerServicio> Model { get; set; }
+}
